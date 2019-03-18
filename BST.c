@@ -1,6 +1,6 @@
 #include "BST.h"
 
-int main(int argc, char* argv[]){  //to test
+/*int main(int argc, char* argv[]){  //to test
   Node* newTree(char*);
   Node* addWord(Node*, char*);
   void printTree(Node*);
@@ -17,6 +17,7 @@ int main(int argc, char* argv[]){  //to test
   printTree(root);
   return 0;
 }
+*/
 
 Node* newTree(char* word){
   Node* addWord(Node*, char*);

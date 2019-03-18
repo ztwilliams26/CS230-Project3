@@ -1,5 +1,9 @@
-wordfreak: lab.o
-	gcc lab.o -o wordfreak
+CODE = lab.c parser.c main.c bst.c
+OBJ = lab.o parser.o main.o bst.o
+PROG = wordfreak
 
-lab.o: lab.c
-	gcc lab.c -c lab.c
+$(PROG) : $(OBJ)
+	gcc $(OBJ) -o $(PROG)
+
+$(OBJ) : $(CODE)
+	gcc -c $(CODE) -o $(OBJ)

@@ -1,7 +1,5 @@
 #include "BST.h"
 
-typedef struct BST Node;
-
 int main(int argc, char* argv[]){  //to test
   Node* newTree(char*);
   Node* addWord(Node*, char*);

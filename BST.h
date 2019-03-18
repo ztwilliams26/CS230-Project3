@@ -13,9 +13,9 @@
 #include "unistd.h"
 #endif  //UNISTD_H
 
-struct BST{
+typedef struct BST{
   char* word;
   int frequency;
   struct BST* left;
   struct BST* right;
-};
+} Node;

@@ -1,3 +1,5 @@
+Video Link: https://youtu.be/sdT3dm3T-yU
+
 BST:
 struct BST: is the structure of the node we use for each word, has a word value, freq, left and right pointers. Standard node for a BST tree
 

@@ -13,3 +13,13 @@
 #include "string.h"
 #endif //STRING_H
 
+#ifndef BST_H
+#define BST_H
+#include "BST.h"
+#endif //BST_H
+
+#ifndef ERRNO_H
+#define ERRNO_H
+#include "errno.h"
+#endif //ERRNO_H
+

@@ -1,4 +1,7 @@
+#ifndef PARSER_H
+#define PARSER_H
 #include "parser.h"
+#endif //PARSER_H
 
 /*
 //I need to find a way to move from word to word. Once that happens can easily increment it
@@ -17,52 +20,66 @@ close(fd);
 //return BST
 }
 */
-int fileTokenizer(int fd){
-//lseek
-off_t lseek(int,off_t, int);
-//read
-ssize_t read(int, void *, size_t );
-//strtok
-char *strtok(char *,const char *);
-//addWord
-struct Node* addWord(struct Node*, char*);
-//strstr
-char* strstr(const char*, const char*);
+Node* fileTokenizer(int fileDes, Node* root){
+	//Prototypes	
+	off_t lseek(int,off_t, int);
+	ssize_t read(int, void *, size_t );
+	char *strtok(char *,const char *);
+	struct Node* addWord(Node*, char*);
+	char* strstr(const char*, const char*);
+	Node* newTree(char *);
+	char* addEOS(char*);
+	//End Prototypes
 
-//newTree
-Node* newTree(char *);
-if(fd == -1){
-return 1;
+	if(fileDes == -1){
+		return root;
+	}
+
+	//***Use lseek to jump to end of file record num bytes then jump back to beginning offset***//
+	//***Uses file size to create char buffer array the size of the file***//
+	//***copies the contents of the file into buffer***//
+
+		
+	int fileSize = (int) lseek(fileDes,0,SEEK_END);
+	char buffer[fileSize+1];
+	int beginning = lseek(fileDes,0,SEEK_SET);
+	
+	int bufIndex = 0;
+	while(read(fileDes,buffer+bufIndex, 10))
+	bufIndex+=10;
+	buffer[fileSize]='\0';
+
+	//***split into smaller words***//
+	char *nextWord = strtok(buffer," ");
+	while(nextWord != NULL){
+		if(strstr(".,;:?\?/!*\"\\@#$%^&)(_+-=\n\t",&nextWord[0]) != NULL){
+			nextWord++;
+		}
+		if(strstr(".,;:?\?/!*\"\\@#$%^&)(_+-=\n\t",&nextWord[strlen(nextWord)-1]) !=NULL){
+			nextWord[strlen(nextWord)-1] = '\0';
+		}
+		if(root == NULL){
+			char* input = addEOS(nextWord);
+			root = newTree(input);
+			free(input);
+		}
+		else{
+			char* input = addEOS(nextWord);			
+			addWord(root, input);
+			free(input);
+		}
+		nextWord = strtok(NULL," ");
+	}
+	//use lseek to get size of file, use read to pull entire file into an giant string, split up string into smaller 
+	//words
+	return root;
 }
-//***Use lseek to jump to end of file record num bytes then jump back to beginning offset***//
-off_t fileSize = lseek(fd,0,SEEK_END);
-lseek(fd,0,SEEK_SET);
 
-//***Uses file size to create char buffer array the size of the file***//
-char buffer[fileSize];
-
-//***copies the contents of the into buffer***//
-ssize_t readFileSize = read(fd ,buffer, sizeof(*buffer)-1);
-
-//***split into smaller words***//
-char *nextWord = strtok(buffer," ");
-Node* node = NULL;
-while(nextWord != NULL){
-	if(strstr(".,;:",&nextWord[0]) != NULL){
-		nextWord++;
-	}
-	if(strstr(".,;:",&nextWord[strlen(nextWord)-1]) !=NULL){
-		nextWord[strlen(nextWord)-1] = '\0';
-	}
-	if(node == NULL){
-		newTree(nextWord);
-	}
-	else{
-		addWord(node,nextWord);
-	}
-	nextWord = strtok(buffer," ");
-}
-//use lseek to get size of file, use read to pull entire file into an giant string, split up string into smaller 
-//words
-return 0;
+//Adds the end of string NULL character to the end of the string
+//Free the pointer after it has been used
+char* addEOS(char* input){
+	char* output = (char*) malloc(sizeof(input)+1);
+	strcpy(output, input);
+	strcat(output, "\0");
+	return output;
 }

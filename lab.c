@@ -20,7 +20,6 @@ int main(int argc, char *argv[]){
 	}
 	//max buffer size ~100kb or 100k characters
 	char buffer[100000];
-	int bytesReturned;
 	while(read(fileOpen, buffer, 10))
 	printf("%s", buffer);
 	int fileClosed = close(fileOpen);

@@ -1,9 +1,18 @@
-main.o: main.c
-	gcc main.c -c main.o
-BST.o: BST.o
-	gcc BST.c -c BST.o
-parser.o: parser.o
-	gcc parser.c -c parser.o
+CC = gcc
+CFLAGS	= -g -Wall
 
-wordfreak:main.o parser.o BST.o
-	gcc main.o -o parser.o -o BST.o -o wordfreak
+default: wordfreak
+
+wordfreak: main.o BST.o parser.o
+	$(CC) $(CFLAGS) -o wordfreak main.o BST.o parser.o
+
+main.o:	main.c BST.h parser.h
+	$(CC) $(CFLAGS) -c main.c
+
+BST.o:	BST.c BST.h
+	$(CC) $(CFLAGS) -c BST.c
+
+parser.o: parser.c parser.h
+	$(CC) $(CFLAGS) -c parser.c
+clean: 
+	$(RM) count *.o *~

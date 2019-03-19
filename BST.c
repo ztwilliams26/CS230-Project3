@@ -34,11 +34,11 @@ Node* addWord(Node* root, char* word){
 		return root;
 	}
 	else if(wordCompare < 0){
-		(*temp) -> left = addWord((*temp)->left, word);
+		(*temp) -> right = addWord((*temp)->right, word);
 		return root;
 	}
 	else{
-		(*temp) -> right = addWord((*temp)->right, word);
+		(*temp) -> left = addWord((*temp)->left, word);
 		return root;
 	}
 }
@@ -72,14 +72,24 @@ void nodePrint(Node* root){
 	//Prototypes end
 
 	if(root->word!=NULL){
-		char* output = outNewLine(root->word);
-		int written = write(1, output, sizeof(output));
-		free(output);
+		//char* output = outNewLine(root->word);
+		char output[100];
+		sprintf(output, "%20s %5i \n", root->word, root->frequency);
+		int written = write(1, output, strlen(output));
 		if(written<0){
+			char* errStr = strerror(errno);
+			write(1, errStr, strlen(errStr));
+			exit(-1);
+		}		
+		//free(output);
+		/*sprintf(output2, "%d", root->frequency);
+		int written2 = write(1, output2, 10);
+		if(written2<0){
 			char* errStr = strerror(errno);
 			write(1, errStr, 40);
 			exit(-1);
-		}
+		}*/
+
 	}
 }
 
@@ -100,12 +110,12 @@ int isAlpha(char* word){
 //Adds the \n character to a string 
 //DONT FORGET to FREE the returned string AFTER USE
 //FUTURE WORK ~~~~~~~~~ Include the frequency and proper formatting
-char* outNewLine(char* input){
+/*char* outNewLine(char* input){
 	char* output = (char*) malloc(sizeof(input)+1);
 	strcpy(output, input);
 	strcat(output, "\n");
 	return output;
-}
+}*/
 
 // NOT NECESSARY - future improvements, use bubble sort to sort the tree by frequency after all words are stored. 
 // WILL SCREW UP TREE if used before all words added

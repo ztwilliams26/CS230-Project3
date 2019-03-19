@@ -23,6 +23,11 @@
 #include "errno.h"
 #endif //ERRNO_H
 
+#ifndef STDIO_H
+#define STDIO_H
+#include "stdio.h"
+#endif //STDIO_H
+
 typedef struct BST{
   char* word;
   int frequency;

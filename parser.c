@@ -66,12 +66,12 @@ Node* fileTokenizer(int fileDes, Node* root){
 		if(*temp == NULL){
 			char* input = addEOS(nextWord);
 			*temp = newTree(input);
-			free(input);
+			//free(input);
 		}
 		else{
 			char* input = addEOS(nextWord);			
 			addWord(*temp, input);
-			free(input);
+			//free(input);
 		}
 		nextWord = strtok(NULL," ");
 	}

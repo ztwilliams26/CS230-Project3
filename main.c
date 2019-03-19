@@ -24,7 +24,7 @@ int main(int argc, char* argv[]){
 			write(1, errStr, 40);
 			exit(-1);
 		}		
-		fileTokenizer(envFD, freqTree);
+		freqTree = fileTokenizer(envFD, freqTree);
 		close(envFD);
 			
 		//ADD ERROR CHECK
@@ -38,7 +38,7 @@ int main(int argc, char* argv[]){
 			write(1, errStr, 40);
 			exit(-1);
 		}		
-		fileTokenizer(currentArgFile, freqTree);
+		freqTree = fileTokenizer(currentArgFile, freqTree);
 		close(currentArgFile);
 
 		//ADD ERROR CHECK
@@ -46,7 +46,7 @@ int main(int argc, char* argv[]){
 	
 	//parse stdin for any contents (might not have any)
 	//open(stdin) ~~~ already open as file descriptor 0	
-	fileTokenizer(0, freqTree);
+	freqTree = fileTokenizer(0, freqTree);
 	//close(stdin) ~~~ doesn't need to be closed
 
 	printTree(freqTree);

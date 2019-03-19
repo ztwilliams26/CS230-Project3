@@ -31,8 +31,10 @@ Node* fileTokenizer(int fileDes, Node* root){
 	char* addEOS(char*);
 	//End Prototypes
 
+	Node** temp = &root;
+
 	if(fileDes == -1){
-		return root;
+		return *temp;
 	}
 
 	//***Use lseek to jump to end of file record num bytes then jump back to beginning offset***//
@@ -43,6 +45,9 @@ Node* fileTokenizer(int fileDes, Node* root){
 	int fileSize = (int) lseek(fileDes,0,SEEK_END);
 	char buffer[fileSize+1];
 	int beginning = lseek(fileDes,0,SEEK_SET);
+	if(fileSize==-1){
+		return *temp;	
+	}
 	
 	int bufIndex = 0;
 	while(read(fileDes,buffer+bufIndex, 10))
@@ -58,14 +63,14 @@ Node* fileTokenizer(int fileDes, Node* root){
 		if(strstr(".,;:?\?/!*\"\\@#$%^&)(_+-=\n\t",&nextWord[strlen(nextWord)-1]) !=NULL){
 			nextWord[strlen(nextWord)-1] = '\0';
 		}
-		if(root == NULL){
+		if(*temp == NULL){
 			char* input = addEOS(nextWord);
-			root = newTree(input);
+			*temp = newTree(input);
 			free(input);
 		}
 		else{
 			char* input = addEOS(nextWord);			
-			addWord(root, input);
+			addWord(*temp, input);
 			free(input);
 		}
 		nextWord = strtok(NULL," ");

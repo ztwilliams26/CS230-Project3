@@ -13,7 +13,9 @@ Node* newTree(char* word){
 Node* addWord(Node* root, char* word){
 	//Prototypes start
 	int isAlpha(char*);
-	//Prototypes end	
+	//Prototypes end
+
+	Node** temp = &root;	
 	
 	if(!isAlpha(word) || word==NULL){
 		return NULL;
@@ -26,17 +28,17 @@ Node* addWord(Node* root, char* word){
 		newNode -> right = NULL;
 		return newNode;
 	}
-	int wordCompare = strcmp((root->word), word);
+	int wordCompare = strcmp(((*temp)->word), word);
 	if(wordCompare==0){
-		root -> frequency++;
+		(*temp) -> frequency++;
 		return root;
 	}
 	else if(wordCompare < 0){
-		root -> left = addWord(root->left, word);
+		(*temp) -> left = addWord((*temp)->left, word);
 		return root;
 	}
 	else{
-		root -> right = addWord(root->right, word);
+		(*temp) -> right = addWord((*temp)->right, word);
 		return root;
 	}
 }
